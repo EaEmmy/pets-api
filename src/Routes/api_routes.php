@@ -35,6 +35,12 @@ $app->get('/entry', [EntryController::class,'getAllEntries']);
 //record
 $app->get('/record', [RecordController::class,'getAllRecords']);
 
+// Get pets by record city name
+$app->get('/pets/{city}', [PetsController::class,'getPetsByCityName']);
+
+// Get pets from category by name
+$app->get('/pets/category/{name}', [PetsController::class,'getPetsByCategoryName']);
+
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Reporting! Hello there!");    

@@ -31,6 +31,25 @@ class PetsModel extends BaseModel
         $query_value[":animal_id"] = $animal_id; 
         return $this->run($sql, $query_value)->fetchAll();
     }
+    public function getPetsByCity($city)
+    {
+        $sql = "SELECT p.* FROM  $this->table_name AS p WHERE p.record_id IN
+        (SELECT record_id FROM record AS r WHERE r.city = :city)";
+
+        $filters_value[":city"] = $city;
+        //return $this->run($sql, $filters_value)->fetch();
+        return $this->paginate($sql, $filters_value);
+    }
+
+    public function getPetsByCategory($name)
+    {
+        $sql = "SELECT p.* FROM  $this->table_name AS p WHERE p.category_id IN
+        (SELECT category_id FROM category AS c WHERE c.name = :name)";
+
+        $filters_value[":name"] = $name;
+        //return $this->run($sql, $filters_value)->fetch();
+        return $this->paginate($sql, $filters_value);
+    }
 
     public function getAll(array $filters = []) {
         $query_values = [];
