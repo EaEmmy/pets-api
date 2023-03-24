@@ -10,6 +10,16 @@ class RecordModel extends BaseModel
         parent::__construct();
     }
 
+    public function getRecordByDate($date_type)
+    {
+        $sql = "SELECT r.* FROM  $this->table_name AS r WHERE r.entry_id IN
+        (SELECT entry_id FROM entry AS e WHERE e.date_type = :date_type)";
+
+        $filters_value[":date_type"] = $date_type;
+        //return $this->run($sql, $filters_value)->fetch();
+        return $this->paginate($sql, $filters_value);
+    }
+
     public function getAll(array $filters = []) {
         $query_values = [];
 

@@ -14,6 +14,17 @@ class RecordController extends BaseController
         $this->record_model = new RecordModel();
     }
 
+    public function getRecordByDateType(Request $request, Response $response, array $uri_args)
+    {
+        $date_type = $uri_args["date_type"];
+        $record_model = new RecordModel();
+        $data = $record_model->getRecordByDate($date_type);
+        
+        $json_data = json_encode($data);
+        $response->getBody()->write($json_data);
+        return $response->withStatus(200)->withHeader("Content-Type","application/json");
+    }
+
     public function getAllRecords(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     
