@@ -10,6 +10,7 @@ use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\PetsModel;
 
 
+
 class PetsController
 {
     private $pet_model = null;
@@ -220,6 +221,17 @@ class PetsController
         $name = $uri_args["name"];
         $pet_model = new PetsModel();
         $data = $pet_model->getPetsByCategory($name);
+        
+        $json_data = json_encode($data);
+        $response->getBody()->write($json_data);
+        return $response->withStatus(200)->withHeader("Content-Type","application/json");
+    }
+
+    public function getPetsByBreedName(Request $request, Response $response, array $uri_args)
+    {
+        $breed = $uri_args["breed"];
+        $pet_model = new PetsModel();
+        $data = $pet_model->getPetsByBreed($breed);
         
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);

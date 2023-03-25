@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2023 at 03:33 PM
+-- Generation Time: Mar 26, 2023 at 12:34 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `entry`;
 CREATE TABLE `entry` (
   `entry_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `date_type` enum('recivedOn','dateLost','dateFound') NOT NULL
+  `date_type` enum('receivedOn','dateLost','dateFound') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
@@ -65,9 +65,9 @@ CREATE TABLE `entry` (
 --
 
 INSERT INTO `entry` (`entry_id`, `date`, `date_type`) VALUES
-(1, '2017-07-12', 'recivedOn'),
-(2, '2017-03-24', 'recivedOn'),
-(3, '2017-05-18', 'recivedOn'),
+(1, '2017-07-12', 'receivedOn'),
+(2, '2017-03-24', 'receivedOn'),
+(3, '2017-05-18', 'receivedOn'),
 (4, '2017-06-08', 'dateLost'),
 (5, '2017-09-20', 'dateFound'),
 (6, '2017-04-28', 'dateFound'),
@@ -75,7 +75,7 @@ INSERT INTO `entry` (`entry_id`, `date`, `date_type`) VALUES
 (8, '2018-08-10', 'dateLost'),
 (9, '2018-09-13', 'dateFound'),
 (10, '2019-02-13', 'dateFound'),
-(11, '2018-01-17', 'recivedOn'),
+(11, '2018-01-17', 'receivedOn'),
 (12, '2018-11-30', 'dateLost');
 
 -- --------------------------------------------------------
@@ -86,7 +86,7 @@ INSERT INTO `entry` (`entry_id`, `date`, `date_type`) VALUES
 
 DROP TABLE IF EXISTS `pets_appearance`;
 CREATE TABLE `pets_appearance` (
-  `apperance_id` int(11) NOT NULL,
+  `appearance_id` int(11) NOT NULL,
   `breed` varchar(50) DEFAULT NULL,
   `color` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -95,7 +95,7 @@ CREATE TABLE `pets_appearance` (
 -- Dumping data for table `pets_appearance`
 --
 
-INSERT INTO `pets_appearance` (`apperance_id`, `breed`, `color`) VALUES
+INSERT INTO `pets_appearance` (`appearance_id`, `breed`, `color`) VALUES
 (1, 'Domestic Shorthair', 'Black'),
 (2, 'Domestic Shorthair', 'White'),
 (3, 'Domestic Shorthair', 'Brown'),
@@ -126,14 +126,14 @@ CREATE TABLE `pets_info` (
   `current_location` varchar(80) DEFAULT NULL,
   `category_id` int(11) NOT NULL,
   `record_id` int(11) NOT NULL,
-  `apperance_id` int(11) NOT NULL
+  `appearance_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `pets_info`
 --
 
-INSERT INTO `pets_info` (`animal_id`, `name`, `age`, `gender`, `status`, `current_location`, `category_id`, `record_id`, `apperance_id`) VALUES
+INSERT INTO `pets_info` (`animal_id`, `name`, `age`, `gender`, `status`, `current_location`, `category_id`, `record_id`, `appearance_id`) VALUES
 (1, 'Neko', 3, 'male', 'lost', NULL, 1, 1, 1),
 (2, 'Trixie', 1, 'female', 'lost', NULL, 2, 2, 2),
 (3, 'Gizmo', 2, 'female', 'lost', NULL, 1, 3, 3),
@@ -207,7 +207,7 @@ ALTER TABLE `entry`
 -- Indexes for table `pets_appearance`
 --
 ALTER TABLE `pets_appearance`
-  ADD PRIMARY KEY (`apperance_id`);
+  ADD PRIMARY KEY (`appearance_id`);
 
 --
 -- Indexes for table `pets_info`
@@ -216,7 +216,7 @@ ALTER TABLE `pets_info`
   ADD PRIMARY KEY (`animal_id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `record_id` (`record_id`),
-  ADD KEY `apperance_id` (`apperance_id`);
+  ADD KEY `apperance_id` (`appearance_id`);
 
 --
 -- Indexes for table `record`
@@ -245,7 +245,7 @@ ALTER TABLE `entry`
 -- AUTO_INCREMENT for table `pets_appearance`
 --
 ALTER TABLE `pets_appearance`
-  MODIFY `apperance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `appearance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `pets_info`
@@ -267,7 +267,7 @@ ALTER TABLE `record`
 -- Constraints for table `pets_info`
 --
 ALTER TABLE `pets_info`
-  ADD CONSTRAINT `apperance_id` FOREIGN KEY (`apperance_id`) REFERENCES `pets_appearance` (`apperance_id`),
+  ADD CONSTRAINT `apperance_id` FOREIGN KEY (`appearance_id`) REFERENCES `pets_appearance` (`appearance_id`),
   ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
   ADD CONSTRAINT `record_id` FOREIGN KEY (`record_id`) REFERENCES `record` (`record_id`);
 
