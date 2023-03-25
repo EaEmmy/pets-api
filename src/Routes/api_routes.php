@@ -41,8 +41,11 @@ $app->get('/pets/{city}', [PetsController::class,'getPetsByCityName']);
 // Get pets from category by name
 $app->get('/pets/category/{name}', [PetsController::class,'getPetsByCategoryName']);
 
-// Get pets from category by name
+// Get record by date type
 $app->get('/record/{date_type}', [RecordController::class,'getRecordByDateType']);
+
+// Get pets by breed
+$app->get('/pets/appearance/{breed}', [PetsController::class,'getPetsByBreedName']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
