@@ -205,38 +205,7 @@ class PetsController
         return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
 
     }
-    public function getPetsByCityName(Request $request, Response $response, array $uri_args)
-    {
-        $city = $uri_args["city"];
-        $pet_model = new PetsModel();
-        $data = $pet_model->getPetsByCity($city);
-
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(200)->withHeader("Content-Type","application/json");
-    }
-
-    public function getPetsByCategoryName(Request $request, Response $response, array $uri_args)
-    {
-        $name = $uri_args["name"];
-        $pet_model = new PetsModel();
-        $data = $pet_model->getPetsByCategory($name);
-        
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(200)->withHeader("Content-Type","application/json");
-    }
-
-    public function getPetsByFurName(Request $request, Response $response, array $uri_args)
-    {
-        $fur = $uri_args["fur"];
-        $pet_model = new PetsModel();
-        $data = $pet_model->getPetsByFur($fur);
-        
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(200)->withHeader("Content-Type","application/json");
-    }
+   
 
     public function getAllPets(Request $request, Response $response) {
         $filters = $request->getQueryParams();
@@ -252,4 +221,17 @@ class PetsController
         $response->getBody()->write($json_data);
         return $response->withStatus(200)->withHeader("Content-Type","application/json");
     }
+
+
+    public function getPetsByCategory(Request $request, Response $response, array $uri_args)
+    {
+        $category_id = $uri_args["category_id"];
+        $pet_model = new PetsModel();
+        $data = $pet_model->getPetsByCategoryId($category_id);
+
+        $json_data = json_encode($data);
+        $response->getBody()->write($json_data);
+        return $response->withStatus(200)->withHeader("Content-Type","application/json");
+    }
+   
 }

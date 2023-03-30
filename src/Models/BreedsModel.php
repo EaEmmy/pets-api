@@ -30,15 +30,6 @@ class BreedsModel extends BaseModel
         return $this->run($sql, $query_value)->fetchAll();
     }
 
-    public function getBreedsByCategory($name)
-    {
-        $sql = "SELECT b.* FROM  $this->table_name AS b WHERE b.category_id IN
-        (SELECT category_id FROM category AS c WHERE c.name = :name)";
-
-        $filters_value[":name"] = $name;
-        //return $this->run($sql, $filters_value)->fetch();
-        return $this->paginate($sql, $filters_value);
-    }
 
     public function getAll(array $filters = []) {
         $query_values = [];

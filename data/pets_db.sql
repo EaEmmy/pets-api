@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2023 at 07:49 PM
+-- Generation Time: Mar 30, 2023 at 09:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -165,7 +165,7 @@ CREATE TABLE `pets_info` (
   `gender` enum('male','female','neutered_male','spayed_female','unaltered') DEFAULT NULL,
   `status` enum('lost','found','adoptable') DEFAULT NULL,
   `current_location` varchar(80) DEFAULT NULL,
-  `category_id` int(11) NOT NULL,
+  `breed_id` int(11) NOT NULL,
   `record_id` int(11) NOT NULL,
   `appearance_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -174,24 +174,24 @@ CREATE TABLE `pets_info` (
 -- Dumping data for table `pets_info`
 --
 
-INSERT INTO `pets_info` (`animal_id`, `name`, `age`, `gender`, `status`, `current_location`, `category_id`, `record_id`, `appearance_id`) VALUES
+INSERT INTO `pets_info` (`animal_id`, `name`, `age`, `gender`, `status`, `current_location`, `breed_id`, `record_id`, `appearance_id`) VALUES
 (1, 'Neko', 3, 'male', 'lost', NULL, 1, 1, 1),
 (2, 'Trixie', 1, 'female', 'lost', NULL, 2, 2, 2),
-(3, 'Gizmo', 2, 'female', 'lost', NULL, 1, 3, 3),
-(4, 'Caramel', 4, 'neutered_male', 'found', 'Reber Ranch 28606 132ND AVE SE KENT, WA 98042', 1, 4, 9),
-(5, 'Fabio', 1, 'neutered_male', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 1, 5, 6),
+(3, 'Gizmo', 2, 'female', 'lost', NULL, 3, 3, 3),
+(4, 'Caramel', 4, 'neutered_male', 'found', 'Reber Ranch 28606 132ND AVE SE KENT, WA 98042', 4, 4, 9),
+(5, 'Fabio', 1, 'neutered_male', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 7, 5, 6),
 (6, 'Velvet', 1, 'spayed_female', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 5, 6, 1),
 (7, 'Mellow', 5, 'neutered_male', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 2, 7, 2),
 (8, 'Tilly', 2, 'spayed_female', 'found', 'In RASKC Foster Home', 1, 8, 5),
 (9, 'Roxy', 1, 'unaltered', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 6, 9, 1),
 (10, 'Earl Lucy', NULL, 'unaltered', 'lost', NULL, 3, 10, 2),
-(11, 'Oreo', 5, 'unaltered', 'lost', NULL, 3, 10, 1),
-(12, 'Scotty', 2, 'unaltered', 'lost', NULL, 4, 11, 1),
+(11, 'Oreo', 5, 'unaltered', 'lost', NULL, 11, 10, 1),
+(12, 'Scotty', 2, 'unaltered', 'lost', NULL, 12, 11, 1),
 (13, 'Chacha', 3, 'spayed_female', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 2, 11, 12),
 (14, 'Nesquick', 1, 'spayed_female', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 5, 12, 5),
-(15, 'Tye', 4, 'female', 'lost', NULL, 2, 12, 9),
-(16, 'Susie', 13, 'spayed_female', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 1, 2, 6),
-(17, 'Willow', 9, 'male', 'found', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 1, 6, 5);
+(15, 'Tye', 4, 'female', 'lost', NULL, 15, 12, 9),
+(16, 'Susie', 13, 'spayed_female', 'adoptable', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 8, 2, 6),
+(17, 'Willow', 9, 'male', 'found', 'King County Pet Adoption Center 21615 64TH AVE S KENT, WA 98032', 10, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ ALTER TABLE `pets_appearance`
 --
 ALTER TABLE `pets_info`
   ADD PRIMARY KEY (`animal_id`),
-  ADD KEY `category_id` (`category_id`),
+  ADD KEY `category_id` (`breed_id`),
   ADD KEY `record_id` (`record_id`),
   ADD KEY `apperance_id` (`appearance_id`);
 
@@ -328,7 +328,7 @@ ALTER TABLE `breed`
 --
 ALTER TABLE `pets_info`
   ADD CONSTRAINT `apperance_id` FOREIGN KEY (`appearance_id`) REFERENCES `pets_appearance` (`appearance_id`),
-  ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
+  ADD CONSTRAINT `breed_id` FOREIGN KEY (`breed_id`) REFERENCES `breed` (`breed_id`),
   ADD CONSTRAINT `record_id` FOREIGN KEY (`record_id`) REFERENCES `record` (`record_id`);
 
 --
