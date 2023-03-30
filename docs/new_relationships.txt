@@ -1,0 +1,8 @@
+/pets/{pet_id}/breed
+
+/breeds
+
+
+/pets/{category_id}/breeds
+/pets/1/breeds     -> cat' breads
+/pets/2/breeds

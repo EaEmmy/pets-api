@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2023 at 12:34 AM
+-- Generation Time: Mar 30, 2023 at 07:49 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -22,6 +22,47 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `pets_db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `pets_db`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breed`
+--
+
+DROP TABLE IF EXISTS `breed`;
+CREATE TABLE `breed` (
+  `breed_id` int(11) NOT NULL,
+  `breed_name` varchar(50) NOT NULL,
+  `origin` varchar(50) NOT NULL,
+  `coat` varchar(50) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `lifespan` varchar(10) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `breed`
+--
+
+INSERT INTO `breed` (`breed_id`, `breed_name`, `origin`, `coat`, `type`, `lifespan`, `category_id`) VALUES
+(1, 'Abyssinian', 'Afro-Asia', 'Short', 'Natural', '9-13', 1),
+(2, 'Bengal', 'United States', 'Short', 'Hybrid', '12-16', 1),
+(3, 'Cyprus', 'Cyprus', 'All', 'Natural', '12-15', 1),
+(4, 'Ragdoll', 'United States', 'Long', 'Hybrid', '12-15', 1),
+(5, 'Sphynx', 'Canada', 'Hairless', 'Mutation', '8-14', 1),
+(6, 'Akita', 'Japan', 'Double coat', 'Muscular', '10', 2),
+(7, 'Chihuahua', 'Mexico', 'All', 'Small', '12+', 2),
+(8, 'German Shepherd', 'Germany', 'Double coat', 'Muscular', '9-13', 2),
+(10, 'Beagle', 'England', 'Short', 'Muscular', '12-15', 2),
+(11, 'Boston Terrier', 'United States', 'Short', 'Muscular', '11–13', 2),
+(12, 'Jamnapari', 'India', 'Short', 'Domestic', '1.5', 3),
+(13, 'Saanen', 'Switzerland', 'Short', 'Domestic', '10', 3),
+(14, 'Grey parrot', 'Congo', 'Feathers', 'Medium', '23', 4),
+(15, 'Cockatiel', 'Australia', 'Feathers', 'Small', '10-15', 4),
+(16, 'Dutch ', 'Netherlands', 'Short', 'Dwarf', '5-8', 5),
+(17, 'Angora', 'China', 'Long', 'Small', '12-16', 5),
+(18, 'Dwarf', 'Mongolia ', 'Short', 'Dwarf', '2-3', 6),
+(19, 'Syrian ', 'Syria', 'Short', 'Small', '2-3', 6);
 
 -- --------------------------------------------------------
 
@@ -87,7 +128,7 @@ INSERT INTO `entry` (`entry_id`, `date`, `date_type`) VALUES
 DROP TABLE IF EXISTS `pets_appearance`;
 CREATE TABLE `pets_appearance` (
   `appearance_id` int(11) NOT NULL,
-  `breed` varchar(50) DEFAULT NULL,
+  `fur` varchar(50) DEFAULT NULL,
   `color` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -95,7 +136,7 @@ CREATE TABLE `pets_appearance` (
 -- Dumping data for table `pets_appearance`
 --
 
-INSERT INTO `pets_appearance` (`appearance_id`, `breed`, `color`) VALUES
+INSERT INTO `pets_appearance` (`appearance_id`, `fur`, `color`) VALUES
 (1, 'Domestic Shorthair', 'Black'),
 (2, 'Domestic Shorthair', 'White'),
 (3, 'Domestic Shorthair', 'Brown'),
@@ -192,6 +233,13 @@ INSERT INTO `record` (`record_id`, `address`, `city`, `state`, `postal_code`, `j
 --
 
 --
+-- Indexes for table `breed`
+--
+ALTER TABLE `breed`
+  ADD PRIMARY KEY (`breed_id`),
+  ADD KEY `category_fk` (`category_id`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -230,6 +278,12 @@ ALTER TABLE `record`
 --
 
 --
+-- AUTO_INCREMENT for table `breed`
+--
+ALTER TABLE `breed`
+  MODIFY `breed_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
@@ -262,6 +316,12 @@ ALTER TABLE `record`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `breed`
+--
+ALTER TABLE `breed`
+  ADD CONSTRAINT `category_fk` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
 
 --
 -- Constraints for table `pets_info`

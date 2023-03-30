@@ -227,11 +227,11 @@ class PetsController
         return $response->withStatus(200)->withHeader("Content-Type","application/json");
     }
 
-    public function getPetsByBreedName(Request $request, Response $response, array $uri_args)
+    public function getPetsByFurName(Request $request, Response $response, array $uri_args)
     {
-        $breed = $uri_args["breed"];
+        $fur = $uri_args["fur"];
         $pet_model = new PetsModel();
-        $data = $pet_model->getPetsByBreed($breed);
+        $data = $pet_model->getPetsByFur($fur);
         
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);

@@ -51,12 +51,12 @@ class PetsModel extends BaseModel
         return $this->paginate($sql, $filters_value);
     }
 
-    public function getPetsByBreed($breed)
+    public function getPetsByFur($fur)
     {
         $sql = "SELECT p.* FROM  $this->table_name AS p WHERE p.appearance_id IN
-        (SELECT appearance_id FROM pets_appearance AS a WHERE a.breed = :breed)";
+        (SELECT appearance_id FROM pets_appearance AS a WHERE a.fur = :fur)";
 
-        $filters_value[":breed"] = $breed;
+        $filters_value[":fur"] = $fur;
         //return $this->run($sql, $filters_value)->fetch();
         return $this->paginate($sql, $filters_value);
     }

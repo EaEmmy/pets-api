@@ -40,9 +40,9 @@ class AppearancesModel extends BaseModel
                 WHERE 1";
 
         // breed filter
-        if (isset($filters["breed"])) {
-            $sql .= " AND a.breed LIKE :breed";
-            $query_values[":breed"] = $filters["breed"]."%";
+        if (isset($filters["fur"])) {
+            $sql .= " AND a.fur LIKE :fur";
+            $query_values[":fur"] = $filters["fur"]."%";
         }
 
         // color filter
