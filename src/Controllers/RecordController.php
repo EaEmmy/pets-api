@@ -5,6 +5,8 @@ namespace Vanier\Api\Controllers;
 use Vanier\Api\Models\RecordModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpNotFoundException;
+
 
 class RecordController extends BaseController
 {
@@ -14,15 +16,21 @@ class RecordController extends BaseController
         $this->record_model = new RecordModel();
     }
 
-    public function getRecordByDateType(Request $request, Response $response, array $uri_args)
+    public function getRecordId(Request $request, Response $response, array $uri_args)
     {
-        $date_type = $uri_args["date_type"];
-        $record_model = new RecordModel();
-        $data = $record_model->getRecordByDate($date_type);
-        
+        $record_id = $uri_args["record_id"];
+    
+        if(empty($record_id)){
+            throw new HttpNotFoundException($request, "Invalid record_id");
+        }
+
+        $recordModel = new RecordModel();
+        $data = $recordModel->getRecordId($record_id);
+
+     
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);
-        return $response->withStatus(200)->withHeader("Content-Type","application/json");
+        return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
     }
 
     public function getAllRecords(Request $request, Response $response) {

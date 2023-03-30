@@ -10,6 +10,14 @@ class EntryModel extends BaseModel
         parent::__construct();
     }
 
+    public function getEntryId($entry_id)
+    {
+        $sql = " SELECT * FROM $this->table_name WHERE entry_id = :entry_id";
+        $query_value[":entry_id"] = $entry_id; 
+        return $this->run($sql, $query_value)->fetchAll();
+    }
+
+
     public function getAll(array $filters = []) {
         $query_values = [];
 

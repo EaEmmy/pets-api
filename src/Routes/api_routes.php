@@ -21,6 +21,7 @@ global $app;
 //root
 $app->get('/', [AboutController::class, 'handleAboutApi']);
 
+// -------------- GET ALL -------------
 //pets
 $app->get('/pets', [PetsController::class,'getAllPets']); 
 
@@ -36,20 +37,10 @@ $app->get('/entries', [EntryController::class,'getAllEntries']);
 //record
 $app->get('/records', [RecordController::class,'getAllRecords']);
 
-// // Get pets by record city name
-// $app->get('/pets/{city}', [PetsController::class,'getPetsByCityName']);
-
-// // Get pets from category by name
-// $app->get('/pets/category/{name}', [PetsController::class,'getPetsByCategoryName']);
-
-// // Get record by date type
-// $app->get('/records/{date_type}', [RecordController::class,'getRecordByDateType']);
-
-// // Get pets by breed
-// $app->get('/pets/appearances/{fur}', [PetsController::class,'getPetsByFurName']);
-
 //breeds
 $app->get('/breeds', [BreedsController::class,'getAllBreeds']);
+
+// -------------GET BY ID ----------------
 
 //breeds by id
 $app->get('/breeds/{breed_id}', [BreedsController::class,'getBreedId']);
@@ -60,27 +51,24 @@ $app->get('/pets/{animal_id}', [PetsController::class,'getPetId']);
 //categories by id
 $app->get('/categories/{category_id}', [CategoriesController::class,'getCategoryId']);
 
-//appearance by id
-$app->get('/appearance/{appearance_id}', [AppearancesController::class,'getAppearanceId']);
+//appearances by id
+$app->get('/appearances/{appearance_id}', [AppearancesController::class,'getAppearanceId']);
 
-// Get breeds by category id
-$app->get('/breeds/category/{name}', [BreedsController::class,'getBreedsByCategoryName']);
+//entries by id
+$app->get('/entries/{entry_id}', [EntryController::class,'getEntryId']);
 
-
-/// ---------------------------TODO ---------------------------
-//entry by id
-$app->get('/entry/{entry_id}', [EntryController::class,'getBreedId']);
-
-//record by id
-$app->get('/record/{record_id}', [RecordController::class,'getBreedId']);
+//records by id
+$app->get('/records/{record_id}', [RecordController::class,'getRecordId']);
 
 
-// Build 2 ----------------  TODO
-// /pets/{pet_id}/breed
+// ------------- Relationships ------------------
+// -----  TODO ---------
+// Get pets by category id
+$app->get('/categories/{category_id}/pets', [PetsController::class,'getPetsByCategory']);
 
-// /pets/{category_id}/breeds
-// /pets/1/breeds     -> cat' breads
-// /pets/2/breeds
+// Get pets by entry id
+$app->get('/entries/{entry_id}/pets', [PetsController::class,'getPetsByEntry']);
+
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

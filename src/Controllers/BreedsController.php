@@ -13,7 +13,6 @@ class BreedsController
         $this->breedModel = new BreedsModel();
     }
 
-    // get appearance by id 
     public function getBreedId(Request $request, Response $response, array $uri_args)
     {
         $breed_id = $uri_args["breed_id"];
@@ -29,8 +28,8 @@ class BreedsController
         $json_data = json_encode($data);
         $response->getBody()->write($json_data);
         return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
-
     }
+    
     public function getAllBreeds(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     
@@ -46,14 +45,4 @@ class BreedsController
         return $response->withStatus(200)->withHeader("Content-Type","application/json");
     }
 
-    public function getBreedsByCategoryName(Request $request, Response $response, array $uri_args)
-    {
-        $name = $uri_args["name"];
-        $breedModel = new BreedsModel();
-        $data = $breedModel->getBreedsByCategory($name);
-        
-        $json_data = json_encode($data);
-        $response->getBody()->write($json_data);
-        return $response->withStatus(200)->withHeader("Content-Type","application/json");
-    }
 }
