@@ -225,8 +225,16 @@ class PetsController
 
     public function getPetsByCategory(Request $request, Response $response, array $uri_args)
     {
+        $filters = $request->getQueryParams();
+
         $category_id = $uri_args["category_id"];
+        
         $pet_model = new PetsModel();
+        
+        if (isset($filters["page"], $filters["page_size"])) {
+            $pet_model->setPaginationOptions($filters["page"], $filters["page_size"]);
+        }
+
         $data = $pet_model->getPetsByCategoryId($category_id);
 
         $json_data = json_encode($data);
