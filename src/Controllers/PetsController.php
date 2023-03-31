@@ -241,5 +241,24 @@ class PetsController
         $response->getBody()->write($json_data);
         return $response->withStatus(200)->withHeader("Content-Type","application/json");
     }
+
+    public function getPetsByEntry(Request $request, Response $response, array $uri_args)
+    {
+        $filters = $request->getQueryParams();
+
+        $entry_id = $uri_args["entry_id"];
+        
+        $pet_model = new PetsModel();
+        
+        if (isset($filters["page"], $filters["page_size"])) {
+            $pet_model->setPaginationOptions($filters["page"], $filters["page_size"]);
+        }
+
+        $data = $pet_model->getPetsByEntryId($entry_id);
+
+        $json_data = json_encode($data);
+        $response->getBody()->write($json_data);
+        return $response->withStatus(200)->withHeader("Content-Type","application/json");
+    }
    
 }

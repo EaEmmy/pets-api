@@ -74,4 +74,14 @@ class PetsModel extends BaseModel
         return $this->paginate($sql, $filters_value);
     }
 
+    public function getPetsByEntryId($entry_id)
+    {
+        $sql = "SELECT * FROM  $this->table_name WHERE record_id IN
+        (SELECT record_id FROM record WHERE entry_id = :entry_id)";
+
+        $filters_value[":entry_id"] = $entry_id;
+        //return $this->run($sql, $filters_value)->fetch();
+        return $this->paginate($sql, $filters_value);
+    }
+
 }

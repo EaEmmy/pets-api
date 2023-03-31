@@ -62,10 +62,10 @@ $app->get('/records/{record_id}', [RecordController::class,'getRecordId']);
 
 
 // ------------- Relationships ------------------
-// -----  TODO ---------
+
 // Get pets by category id
 $app->get('/categories/{category_id}/pets', [PetsController::class,'getPetsByCategory']);
-
+// -----  TODO ---------
 // Get pets by entry id
 $app->get('/entries/{entry_id}/pets', [PetsController::class,'getPetsByEntry']);
 
