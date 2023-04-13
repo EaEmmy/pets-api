@@ -124,7 +124,7 @@ class BaseModel
         if (empty($args)) {
             return $this->db->query($sql);
         }
-
+        //echo $sql;exit;
         $stmt = $this->db->prepare($sql);
         $stmt->execute($args);
 

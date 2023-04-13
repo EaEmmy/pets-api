@@ -9,15 +9,13 @@ class PetsModel extends BaseModel
     public function __construct(){
         parent::__construct();
     }
-
     public function createPet(array $pet){
         return $this->insert($this->table_name, $pet);
     }
-
     public function updatePet(array $pet, int $animal_id){
-        return $this->update($this->table_name, $pet, ["animal_id" => $animal_id]);
+        //var_dump($animal_id);exit;
+        return $this->update($this->table_name, $pet,["animal_id" => $animal_id]);
     }
-    
     public function deletePet(int $animal_id){
         return $this->delete($this->table_name, ["animal_id" => $animal_id]);
     }

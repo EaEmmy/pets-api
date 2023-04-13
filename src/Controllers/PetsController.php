@@ -125,6 +125,7 @@ class PetsController
             // validate rules for pet
             if($this->isValidPetUpdate($pet)){
                 $animal_id = $pet['animal_id'];
+                unset($pet['animal_id']);
                 $this->pet_model->updatePet($pet, $animal_id); 
             }      
         }
