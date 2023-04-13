@@ -9,7 +9,10 @@ class RecordModel extends BaseModel
     public function __construct(){
         parent::__construct();
     }
-
+    // create record in the db
+    public function createRecord(array $record){
+        return $this->insert($this->table_name, $record);
+    }
     public function getRecordId($record_id)
     {
         $sql = " SELECT * FROM $this->table_name WHERE record_id = :record_id";

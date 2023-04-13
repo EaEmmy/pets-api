@@ -10,8 +10,8 @@ class AppearancesModel extends BaseModel
         parent::__construct();
     }
 
-      // create appearance in the db
-      public function createAppearance(array $appearance){
+    // create appearance in the db
+    public function createAppearance(array $appearance){
         return $this->insert($this->table_name, $appearance);
     }
 

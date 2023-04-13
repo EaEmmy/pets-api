@@ -1,9 +1,11 @@
 <?php
 
 namespace Vanier\Api\Controllers;
+use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
+use Psr\Log\InvalidArgumentException;
 use Vanier\Api\Models\AppearancesModel;
 
 
@@ -14,7 +16,70 @@ class AppearancesController
     public function __construct(){
         $this->appearanceModel = new AppearancesModel();
     }
+    // create new appearance
 
+    
+    public function handleCreateAppearances(Request $request, Response $response){
+
+        //step1: to retrieve from request body
+        $appearance_data = $request->getParsedBody();
+
+        //VALIDATE 1-check if body is not empty
+        if(empty($appearance_data)){
+            throw new HttpNotFoundException($request, "Error body cannot be empty");
+        }
+    
+        //VALIDATE 2-if parsed body is an array
+        if(!is_array($appearance_data)){
+            throw new InvalidArgumentException("Invalid data format: expected an array");
+        }
+    
+        foreach ($appearance_data as $key => $appearance) {
+            if($this->isValidAppearance($appearance)){
+                $this->appearanceModel->createAppearance($appearance); 
+            }   
+        }
+        return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
+    }
+
+    // // validate film and set rules
+    private function isValidAppearance($appearance)
+    {
+        
+        // rules to validate 
+        $rules = array(
+            'fur' => array(
+                array('lengthBetween', 1, 50),
+                array('regex', '/^[a-zA-Z\s]+$/'
+                )
+            ),
+            'color' => array(
+                array('lengthBetween', 1, 50),
+                array('regex', '/^[a-zA-Z\s]+$/'
+                )
+            )
+        );
+    
+        // stores new film data
+        $validator = new \Vanier\Api\Helpers\Validator($appearance);
+
+        // pass new film through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new actor, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            $errors = $validator->errors();
+            $error_messages = array();
+            foreach($errors as $field => $field_errors){
+                foreach($field_errors as $error){
+                    $error_messages[] = "$field: $error";
+                }
+            }
+            $error_message = implode("; ", $error_messages);
+            throw new InvalidArgumentException("Invalid: $error_message");
+        }
+    }
     // get appearance by id 
     public function getAppearanceId(Request $request, Response $response, array $uri_args)
     {

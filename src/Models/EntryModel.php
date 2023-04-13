@@ -9,6 +9,10 @@ class EntryModel extends BaseModel
     public function __construct(){
         parent::__construct();
     }
+    // create entry in the db
+    public function createEntry(array $entry){
+        return $this->insert($this->table_name, $entry);
+    }
 
     public function getEntryId($entry_id)
     {
@@ -16,7 +20,6 @@ class EntryModel extends BaseModel
         $query_value[":entry_id"] = $entry_id; 
         return $this->run($sql, $query_value)->fetchAll();
     }
-
 
     public function getAll(array $filters = []) {
         $query_values = [];

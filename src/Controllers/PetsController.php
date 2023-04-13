@@ -19,133 +19,186 @@ class PetsController
         $this->pet_model = new PetsModel();
     }
 
-     // POST to create new pet
-    //  public function handleCreatePets(Request $request, Response $response){
+    //POST to create new pet
+     public function handleCreatePets(Request $request, Response $response){
 
-    //     //step1: to retrieve from request body
-    //     $pet_data = $request->getParsedBody();
+        //step1: to retrieve from request body
+        $pet_data = $request->getParsedBody();
 
-    //     //VALIDATE 1-check if body is not empty
-    //     if(empty($pet_data)){
-    //         throw new HttpNotFoundException($request, "Error body cannot be empty");
-    //     }
+        //VALIDATE 1-check if body is not empty
+        if(empty($pet_data)){
+            throw new HttpNotFoundException($request, "Error body cannot be empty");
+        }
     
-    //     //VALIDATE 2-if parsed body is an array
-    //     if(!is_array($pet_data)){
-    //         throw new InvalidArgumentException("Invalid data format: expected an array");
-    //     }
+        //VALIDATE 2-if parsed body is an array
+        if(!is_array($pet_data)){
+            throw new InvalidArgumentException("Invalid data format: expected an array");
+        }
     
-    //     foreach ($pet_data as $key => $pet) {
-    //         if($this->isValidPet($pet)){
-    //             $this->pet_model->createPet($pet); 
-    //         }   
-    //     }
-    //     return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
-    // }
+        foreach ($pet_data as $key => $pet) {
+            if($this->isValidPet($pet)){
+                $this->pet_model->createPet($pet); 
+            }   
+        }
+        return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
+    }
 
     // // validate film and set rules
-    // private function isValidPet($pet)
-    // {
+    private function isValidPet($pet)
+    {
         
-    //     // rules to validate 
-    //     $rules = array(
-    //         'title' => array(
-    //             'required',
-    //             array('lengthBetween', 1, 128),
-    //             array('regex', '/^[a-zA-Z\s]+$/'
-    //             )
-    //         ),
-    //         'description' => array(
-    //             'required',
-    //             array('lengthBetween', 1, 128),
-    //             array('regex', '/^[a-zA-Z\s]+$/'
-    //             )
-    //         ),
-    //         'release_year' => array(
-    //             'required',
-    //             'date' 
-    //         ),
-    //         'language_id' => array(
-    //             'required',
-    //             'integer'
-    //         ),
-    //         'original_language_id' => array(
-    //             'integer'
-    //         ),
-    //         'rental_duration' => array(
-    //             'required',
-    //             'integer'
-    //         ),
-    //         'rental_rate' => array(
-    //             'required',
-    //             'decimal'
-    //         ),
-    //         'length' => array(
-    //             'required',
-    //             'integer'
-    //         ),
-    //         'replacement_cost' => array(
-    //             'required',
-    //             'decimal'
-    //         ),
-    //         'rating' => array(
-    //             'required',
-    //             array('in',array('G','PG','PG-13','R','NC-17'))
-    //         ),
-    //         'special_features' => array(
-    //             array('in',array('Trailers','Commentaries','Deleted Scenes','Behind the Scenes'))
-    //         ),
-    //         'last_update' => array(
-    //             'required',
-    //             'date' 
-    //         )
-    //     );
+        // rules to validate 
+        $rules = array(
+            'name' => array(
+                array('lengthBetween', 1, 20),
+                array('regex', '/^[a-zA-Z\s]+$/')
+            ),
+            'age' => array(
+                'integer'
+            ),
+            'gender' => array(
+                array('in',array('male','female','neutered_male','spayed_female','unaltered'))
+            ),
+            'status' => array(
+                array('in',array('lost','found','adoptable'))
+            ),
+            'current_location' => array(
+                array('lengthBetween', 1, 80),
+                array('regex', '/^[a-zA-Z\s]+$/')
+            ),
+            'breed_id' => array(
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 19]
+            ),
+            'record_id' => array(
+                'required',
+                'integer',
+                ['min', 1]
+               // ['max', 12]
+            ),
+            'appearance_id' => array(
+                'required',
+                'integer',
+                ['min', 1]
+                //['max', 14]
+            )
+        );
     
-    //     // stores new film data
-    //     $validator = new \Vanier\Api\Helpers\Validator($pet);
+        // stores new film data
+        $validator = new \Vanier\Api\Helpers\Validator($pet);
 
-    //     // pass new film through rules array to check
-    //     $validator->mapFieldsRules($rules);
-    //     // validate the new actor, else catch error 
-    //     if ($validator->validate()) {
-    //         return true;
-    //     } else {
-    //         $errors = $validator->errors();
-    //         $error_messages = array();
-    //         foreach($errors as $field => $field_errors){
-    //             foreach($field_errors as $error){
-    //                 $error_messages[] = "$field: $error";
-    //             }
-    //         }
-    //         $error_message = implode("; ", $error_messages);
-    //         throw new InvalidArgumentException("Invalid: $error_message");
-    //     }
-    // }
+        // pass new film through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new actor, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            $errors = $validator->errors();
+            $error_messages = array();
+            foreach($errors as $field => $field_errors){
+                foreach($field_errors as $error){
+                    $error_messages[] = "$field: $error";
+                }
+            }
+            $error_message = implode("; ", $error_messages);
+            throw new InvalidArgumentException("Invalid: $error_message");
+        }
+    }
 
-    // public function handleUpdatePets(Request $request, Response $response){
+    public function handleUpdatePets(Request $request, Response $response){
 
-    //     $pet_data = $request->getParsedBody();
+        $pet_data = $request->getParsedBody();
 
-    //         //VALIDATE 1-check if body is not empty
-    //         if(empty($pet_data)){
-    //             throw new HttpNotFoundException($request, "Error body cannot be empty");
-    //         }
+            //VALIDATE 1-check if body is not empty
+            if(empty($pet_data)){
+                throw new HttpNotFoundException($request, "Error body cannot be empty");
+            }
         
-    //         //VALIDATE 2-if parsed body is an array
-    //         if(!is_array($pet_data)){
-    //             throw new InvalidArgumentException("Invalid data format: expected an array");
-    //         }
+            //VALIDATE 2-if parsed body is an array
+            if(!is_array($pet_data)){
+                throw new InvalidArgumentException("Invalid data format: expected an array");
+            }
                
-    //     foreach ($pet_data as $key => $pet) {
-    //         // validate rules for pet
-    //         if($this->isValidPet($pet)){
-    //             $pet_id = $pet['pet_id'];
-    //             $this->pet_model->updatePet($pet_id, $pet); 
-    //         }      
-    //     }
+        foreach ($pet_data as $key => $pet) {
+            // validate rules for pet
+            if($this->isValidPetUpdate($pet)){
+                $animal_id = $pet['animal_id'];
+                $this->pet_model->updatePet($pet, $animal_id); 
+            }      
+        }
     
-    //     return $response->withStatus(StatusCodeInterface::STATUS_OK);
-    // }
+        return $response->withStatus(StatusCodeInterface::STATUS_OK);
+    }
+
+    private function isValidPetUpdate($pet)
+    {
+        
+        // rules to validate 
+        $rules = array(
+            'animal_id' => array(
+                'required',
+                'integer',
+                array('lengthBetween', 1, 11)
+            ),
+            'name' => array(
+                array('lengthBetween', 1, 20),
+                array('regex', '/^[a-zA-Z\s]+$/')
+            ),
+            'age' => array(
+                'integer'
+            ),
+            'gender' => array(
+                array('in',array('male','female','neutered_male','spayed_female','unaltered'))
+            ),
+            'status' => array(
+                array('in',array('lost','found','adoptable'))
+            ),
+            'current_location' => array(
+                array('lengthBetween', 1, 80),
+                array('regex', '/^[a-zA-Z\s]+$/')
+            ),
+            'breed_id' => array(
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 19]
+            ),
+            'record_id' => array(
+                'required',
+                'integer',
+                ['min', 1]
+               // ['max', 12]
+            ),
+            'appearance_id' => array(
+                'required',
+                'integer',
+                ['min', 1]
+                //['max', 14]
+            )
+        );
+    
+        // stores new film data
+        $validator = new \Vanier\Api\Helpers\Validator($pet);
+
+        // pass new film through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new actor, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            $errors = $validator->errors();
+            $error_messages = array();
+            foreach($errors as $field => $field_errors){
+                foreach($field_errors as $error){
+                    $error_messages[] = "$field: $error";
+                }
+            }
+            $error_message = implode("; ", $error_messages);
+            throw new InvalidArgumentException("Invalid: $error_message");
+        }
+    }
     
     // // DELETE films 
     // public function handleDeletePets(Request $request, Response $response){

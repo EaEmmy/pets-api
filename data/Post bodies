@@ -1,0 +1,42 @@
+pets:
+[
+    {
+       "name":"YAKE",
+       "age":"8",
+       "gender":"male",
+       "status":"found",
+       "current_location":"home mtl",
+       "breed_id":"7",
+       "record_id":"4",
+       "appearance_id":"5"   
+    }
+ ]
+
+appearances:
+[
+    {
+       "fur":"Furless",
+       "color":"Skin color"
+    }
+ ]
+
+entries:
+[
+    {
+       "date":"2023-02-15",
+       "date_type":"receivedOn"
+    }
+ ]
+
+
+records:
+[
+   {
+      "address":"1111 Vanier",
+      "city":"MONTREAL",
+      "state":"QC",
+      "postal_code":"09329",
+      "jurisdiction":"OHIO",
+      "entry_id":"13"
+   }
+]

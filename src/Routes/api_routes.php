@@ -65,10 +65,21 @@ $app->get('/records/{record_id}', [RecordController::class,'getRecordId']);
 
 // Get pets by category id
 $app->get('/categories/{category_id}/pets', [PetsController::class,'getPetsByCategory']);
-// -----  TODO ---------
 // Get pets by entry id
 $app->get('/entries/{entry_id}/pets', [PetsController::class,'getPetsByEntry']);
 
+// ------------- POST ------------------
+// Create new pet
+$app->post('/pets', [PetsController::class,'handleCreatePets']); 
+// Create new appearance
+$app->post('/appearances', [AppearancesController::class,'handleCreateAppearances']);
+// Create new entries
+$app->post('/entries', [EntryController::class,'handleCreateEntries']);
+// Create new records  
+$app->post('/records', [RecordController::class,'handleCreateRecords']);
+
+// ------------- UPDATE ------------------
+$app->put('/pets', [PetsController::class,'handleUpdatePets']); 
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
