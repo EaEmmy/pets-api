@@ -20,6 +20,9 @@ class EntryModel extends BaseModel
         $query_value[":entry_id"] = $entry_id; 
         return $this->run($sql, $query_value)->fetchAll();
     }
+    // public function deleteEntry(int $animal_id){
+    //     return $this->delete($this->table_name, ["animal_id" => $animal_id]);
+    // }
 
     public function getAll(array $filters = []) {
         $query_values = [];

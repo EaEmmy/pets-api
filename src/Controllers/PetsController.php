@@ -9,8 +9,6 @@ use Slim\Exception\HttpException;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\PetsModel;
 
-
-
 class PetsController
 {
     private $pet_model = null;
@@ -201,45 +199,45 @@ class PetsController
         }
     }
     
-    // // DELETE films 
-    // public function handleDeletePets(Request $request, Response $response){
-    //     //Step 1) retrieve data from request
-    //     $pet_data = $request->getParsedBody();
+    // DELETE Pets 
+    public function handleDeletePets(Request $request, Response $response){
+        //Step 1) retrieve data from request
+        $pet_data = $request->getParsedBody();
         
-    //     //VALIDATE 1-check if body is not empty
-    //     if(empty($pet_data)){
-    //         throw new HttpNotFoundException($request, "Error body cannot be empty");
-    //     }
+        //VALIDATE 1-check if body is not empty
+        if(empty($pet_data)){
+            throw new HttpNotFoundException($request, "Error body cannot be empty");
+        }
     
-    //     //VALIDATE 2-if parsed body is an array
-    //     if(!is_array($pet_data)){
-    //         throw new InvalidArgumentException("Invalid data format: expected an array");
-    //     }
+        //VALIDATE 2-if parsed body is an array
+        if(!is_array($pet_data)){
+            throw new InvalidArgumentException("Invalid data format: expected an array");
+        }
     
-    //     //Step 2) Delete film
-    //     foreach($pet_data as $key => $pet_id){
-    //         // Check if the film is valid and exists in the database
-    //         if($this->isValidDeletePets([$pet_id])){
-    //             //Step 3) Pass the film element/item to the model
-    //             $this->pet_model->deleteFilm($pet_id);
-    //         }           
-    //     }
+        //Step 2) Delete film
+        foreach($pet_data as $key => $animal_id){
+            // Check if the film is valid and exists in the database
+            if($this->isValidDeletePets([$animal_id])){
+                //Step 3) Pass the film element/item to the model
+                $this->pet_model->deletePet($animal_id);
+            }           
+        }
     
-    //     return $response->withStatus(StatusCodeInterface::STATUS_CREATED);
-    // }
+        return $response->withStatus(StatusCodeInterface::STATUS_CREATED);
+    }
     
-    // // validate film_id before deletion
-    // private function isValidDeletePets($pets)
-    // {       
-    //     foreach ($pets as $pet_id) {
-    //         // Check if the film exists in the database
-    //         $valid_pet = $this->pet_model->getPetId($pet_id);
-    //         if(!$valid_pet) {
-    //             throw new InvalidArgumentException("Invalid pet_id");
-    //         }
-    //     }
-    //     return true;
-    // }
+    // validate film_id before deletion
+    private function isValidDeletePets($pets)
+    {       
+        foreach ($pets as $animal_id) {
+            // Check if the film exists in the database
+            $valid_pet = $this->pet_model->getPetId($animal_id);
+            if(!$valid_pet) {
+                throw new InvalidArgumentException("Invalid animal_id");
+            }
+        }
+        return true;
+    }
 
     // get pet by id 
     public function getPetId(Request $request, Response $response, array $uri_args)
@@ -269,7 +267,13 @@ class PetsController
             $pet_model->setPaginationOptions($filters["page"], $filters["page_size"]);
         }
     
-        $data = $pet_model->getAll($filters);
+        
+        $cat_facts_controller = new CatFactController();
+        $facts = $cat_facts_controller ->getCatFacts();
+        $data = [
+            'pets' => $this->pet_model->getAll($filters),
+            'cat_facts' => $facts
+        ]; 
         $json_data = json_encode($data);
     
         $response->getBody()->write($json_data);

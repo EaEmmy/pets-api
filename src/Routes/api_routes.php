@@ -7,6 +7,7 @@ use Vanier\Api\Controllers\PetsController;
 use Vanier\Api\Controllers\CategoriesController;
 use Vanier\Api\Controllers\AppearancesController;
 use Vanier\Api\Controllers\BreedsController;
+use Vanier\Api\controllers\CatFactController;
 use Vanier\Api\Controllers\EntryController;
 use Vanier\Api\Controllers\RecordController;
 
@@ -80,6 +81,17 @@ $app->post('/records', [RecordController::class,'handleCreateRecords']);
 
 // ------------- UPDATE ------------------
 $app->put('/pets', [PetsController::class,'handleUpdatePets']); 
+
+// ------------- DELETE ------------------
+// Delete pets
+$app->delete('/pets', [PetsController::class,'handleDeletePets']); 
+// Delete entries
+//$app->delete('/entries', [EntryController::class,'handleDeleteEntries']);
+// Delete records  
+//$app->delete('/records', [RecordController::class,'handleDeleteRecords']);
+
+// ------------- Composite Resources ------------------
+//$app->get('/pets', [CatFactController::class, 'getCatFacts']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

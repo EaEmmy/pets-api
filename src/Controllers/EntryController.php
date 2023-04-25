@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Psr\Log\InvalidArgumentException;
 
-
 class EntryController extends BaseController
 {
     private $entry_model = null;
@@ -41,7 +40,30 @@ class EntryController extends BaseController
         return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
     }
 
-    // // validate film and set rules
+    // public function handleDeleteEntries(Request $request, Response $response){
+
+    //     //step1: to retrieve from request body
+    //     $entry_data = $request->getParsedBody();
+
+    //     //VALIDATE 1-check if body is not empty
+    //     if(empty($entry_data)){
+    //         throw new HttpNotFoundException($request, "Error body cannot be empty");
+    //     }
+    
+    //     //VALIDATE 2-if parsed body is an array
+    //     if(!is_array($entry_data)){
+    //         throw new InvalidArgumentException("Invalid data format: expected an array");
+    //     }
+    
+    //     foreach ($entry_data as $key => $entry) {
+    //         if($this->isValidEntry($entry)){
+    //             $this->entry_model->createEntry($entry); 
+    //         }   
+    //     }
+    //     return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
+    // }
+
+    // // validate entry and set rules
     private function isValidEntry($entry)
     {
         
