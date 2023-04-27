@@ -90,9 +90,6 @@ $app->delete('/pets', [PetsController::class,'handleDeletePets']);
 // Delete records  
 //$app->delete('/records', [RecordController::class,'handleDeleteRecords']);
 
-// ------------- Composite Resources ------------------
-//$app->get('/pets', [CatFactController::class, 'getCatFacts']);
-
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Reporting! Hello there!");    

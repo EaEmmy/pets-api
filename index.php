@@ -8,6 +8,12 @@ use Vanier\Api\Controllers\CategoriesController;
 use Vanier\Api\Controllers\AppearancesController;
 use Vanier\Api\Middleware\ContentNegotiationMiddleware;
 
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
+
+define('APP_BASE_DIR', __DIR__);
 // What's up???
 require __DIR__ . '/vendor/autoload.php';
  // Include the file that contains the application's global configuration settings,
@@ -33,13 +39,28 @@ $app->setBasePath("/pets-api");
 // NOTE: your routes must be managed in the api_routes.php file.
 require_once __DIR__ . '/src/Routes/api_routes.php';
 
-// pets crud 
-//$app->get('/pets', [PetsController::class,'getAllPets']);
-// $app->post('/pets', [PetsController::class, 'handleCreatePets']);
-// $app->put('/pets', [PetsController::class, 'handleUpdatePets']);
-// $app->delete('/pets', [PetsController::class, 'handleDeletePets']);
-// This is a middleware that should be disabled/enabled later. 
-//$app->add($beforeMiddleware);
+// Logging 
+$app->get('/login', function (Request $request, Response $response, $args) {
+    // 1) A new log channel for general message
+    $logger = new Logger('access_logs');
+    $logger->setTimezone(new DateTimeZone('America/Toronto'));
+    $log_handler = new StreamHandler(APP_LOG_DIR.'access.log', Logger::DEBUG);
+    $logger->pushHandler($log_handler);
+    // 2) A new channel for db 
+    $db_logger = new Logger("database_logs");
+    // returns time 
+    $db_logger->setTimezone(new DateTimeZone('America/Toronto'));
+    $db_logger->pushHandler($log_handler);
+    // here is your logging message body
+    $db_logger->info("Hello, this our pets-api project.");
+    $db_logger->info("Line 2 test");
+    // general log message
+    $params = $request->getQueryParams();
+    $logger->info("Access: ".$request->getMethod().
+    ' '.$request->getUri()->getPath(), $params);
+    $response->getBody()->write("Reporting! Logging in process!");
+    return $response; 
+});
 
 // Run the app.
 $app->run();

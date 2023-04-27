@@ -267,12 +267,15 @@ class PetsController
             $pet_model->setPaginationOptions($filters["page"], $filters["page_size"]);
         }
     
-        
+        // composite resources 
         $cat_facts_controller = new CatFactController();
+        $dog_facts_controller = new DogFactController();
         $facts = $cat_facts_controller ->getCatFacts();
+        $dog_facts = $dog_facts_controller ->getDogFacts();
         $data = [
             'pets' => $this->pet_model->getAll($filters),
-            'cat_facts' => $facts
+            'cat_facts' => $facts,
+            'dog_facts' => $dog_facts
         ]; 
         $json_data = json_encode($data);
     

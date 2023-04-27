@@ -22,5 +22,4 @@ class CatFactController extends WebServiceInvoker
         //var_dump($refined_facts);exit;
         return $refined_facts;
     }
-
 }
