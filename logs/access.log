@@ -54,3 +54,6 @@
 [2023-05-04T17:24:31.280724-04:00] access_logs.INFO: hello from middleware [] []
 [2023-05-04T17:24:31.283098-04:00] access_logs.INFO: IP: 127.0.0.1 DELETE /pets-api/records [] []
 [2023-05-04T17:24:31.283134-04:00] access_logs.INFO: IP: 127.0.0.1 DATA  [] []
+[2023-05-04T18:40:33.422362-04:00] access_logs.INFO: hello from middleware [] []
+[2023-05-04T18:40:33.427321-04:00] access_logs.INFO: IP: 127.0.0.1 GET /pets-api/pets [] []
+[2023-05-04T18:40:33.427344-04:00] access_logs.INFO: IP: 127.0.0.1 DATA  [] []
