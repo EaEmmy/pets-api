@@ -269,13 +269,13 @@ class PetsController
     
         // composite resources 
         $cat_facts_controller = new CatFactController();
-        $dog_facts_controller = new DogFactController();
+        $joke_controller = new JokeController();
         $facts = $cat_facts_controller ->getCatFacts();
-        $dog_facts = $dog_facts_controller ->getDogFacts();
+        $jokes = $joke_controller ->getJokes();
         $data = [
             'pets' => $this->pet_model->getAll($filters),
             'cat_facts' => $facts,
-            'dog_facts' => $dog_facts
+            'jokes' => $jokes
         ]; 
         $json_data = json_encode($data);
     
