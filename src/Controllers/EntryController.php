@@ -56,14 +56,14 @@ class EntryController extends BaseController
     //     }
     
     //     foreach ($entry_data as $key => $entry) {
-    //         if($this->isValidEntry($entry)){
-    //             $this->entry_model->createEntry($entry); 
+    //         if($this->isValidDeleteEntry($entry)){
+    //             $this->entry_model->deleteEntry($entry); 
     //         }   
     //     }
-    //     return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
+    //     return $response->withStatus(StatusCodeInterface::STATUS_OK);//->withHeader("Content-Type", "application/json");
     // }
 
-    // // validate entry and set rules
+    // validate entry and set rules
     private function isValidEntry($entry)
     {
         
@@ -98,6 +98,19 @@ class EntryController extends BaseController
             throw new InvalidArgumentException("Invalid: $error_message");
         }
     }
+
+    // validate entry_id before deletion
+    // private function isValidDeleteEntry($entry)
+    // {       
+    //     foreach ($entry as $entry_id) {
+    //         // Check if the film exists in the database
+    //         $valid_entry = $this->entry_model->getEntryId($entry_id);
+    //         if(!$valid_entry) {
+    //             throw new InvalidArgumentException("Invalid entry_id");
+    //         }
+    //     }
+    //     return true;
+    // }
 
     public function getEntryId(Request $request, Response $response, array $uri_args)
     {

@@ -13,6 +13,11 @@ class RecordModel extends BaseModel
     public function createRecord(array $record){
         return $this->insert($this->table_name, $record);
     }
+
+    // public function deleteRecord(int $record_id){
+    //     return $this->delete($this->table_name, ["record_id" => $record_id]);
+    // }
+
     public function getRecordId($record_id)
     {
         $sql = " SELECT * FROM $this->table_name WHERE record_id = :record_id";

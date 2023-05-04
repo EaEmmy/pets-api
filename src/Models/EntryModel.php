@@ -13,6 +13,9 @@ class EntryModel extends BaseModel
     public function createEntry(array $entry){
         return $this->insert($this->table_name, $entry);
     }
+    // public function deleteEntry(int $entry_id){
+    //     return $this->delete($this->table_name, ["entry_id" => $entry_id]);
+    // }   
 
     public function getEntryId($entry_id)
     {
@@ -20,10 +23,7 @@ class EntryModel extends BaseModel
         $query_value[":entry_id"] = $entry_id; 
         return $this->run($sql, $query_value)->fetchAll();
     }
-    // public function deleteEntry(int $animal_id){
-    //     return $this->delete($this->table_name, ["animal_id" => $animal_id]);
-    // }
-
+   
     public function getAll(array $filters = []) {
         $query_values = [];
 

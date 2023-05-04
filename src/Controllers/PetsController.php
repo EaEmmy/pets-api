@@ -34,7 +34,8 @@ class PetsController
         }
     
         foreach ($pet_data as $key => $pet) {
-            if($this->isValidPet($pet)){
+            if($this->isValidPet($pet))
+            {
                 $this->pet_model->createPet($pet); 
             }   
         }

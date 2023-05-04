@@ -41,6 +41,29 @@ class RecordController extends BaseController
         return $response->withStatus(StatusCodeInterface::STATUS_CREATED);//->withHeader("Content-Type", "application/json");
     }
 
+    // public function handleDeleteRecords(Request $request, Response $response){
+
+    //     //step1: to retrieve from request body
+    //     $record_data = $request->getParsedBody();
+
+    //     //VALIDATE 1-check if body is not empty
+    //     if(empty($record_data)){
+    //         throw new HttpNotFoundException($request, "Error body cannot be empty");
+    //     }
+    
+    //     //VALIDATE 2-if parsed body is an array
+    //     if(!is_array($record_data)){
+    //         throw new InvalidArgumentException("Invalid data format: expected an array");
+    //     }
+    
+    //     foreach ($record_data as $key => $record) {
+    //         if($this->isValidDeleteRecord($record)){
+    //             $this->record_model->deleteRecord($record); 
+    //         }   
+    //     }
+    //     return $response->withStatus(StatusCodeInterface::STATUS_OK);//->withHeader("Content-Type", "application/json");
+    // }
+
     // // validate film and set rules
     private function isValidRecord($record)
     {
@@ -94,6 +117,19 @@ class RecordController extends BaseController
             throw new InvalidArgumentException("Invalid: $error_message");
         }
     }
+
+    // validate record_id before deletion
+    // private function isValidDeleteRecord($record)
+    // {       
+    //     foreach ($record as $record_id) {
+    //         // Check if the film exists in the database
+    //         $valid_record = $this->record_model->getRecordId($record_id);
+    //         if(!$valid_record) {
+    //             throw new InvalidArgumentException("Invalid record_id");
+    //         }
+    //     }
+    //     return true;
+    // }
 
     public function getRecordId(Request $request, Response $response, array $uri_args)
     {
