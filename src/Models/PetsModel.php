@@ -2,24 +2,55 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * Summary of PetsModel
+ */
 class PetsModel extends BaseModel
 {
+    /**
+     * Summary of table_name
+     * @var string
+     */
     private $table_name = "pets_info";
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         parent::__construct();
     }
+    /**
+     * Summary of createPet
+     * @param array $pet
+     * @return bool|string
+     */
     public function createPet(array $pet){
         return $this->insert($this->table_name, $pet);
     }
+    /**
+     * Summary of updatePet
+     * @param array $pet
+     * @param int $animal_id
+     * @return mixed
+     */
     public function updatePet(array $pet, int $animal_id){
         //var_dump($animal_id);exit;
         return $this->update($this->table_name, $pet,["animal_id" => $animal_id]);
     }
+    /**
+     * Summary of deletePet
+     * @param int $animal_id
+     * @return mixed
+     */
     public function deletePet(int $animal_id){
         return $this->delete($this->table_name, ["animal_id" => $animal_id]);
     }
 
+    /**
+     * Summary of getPetId
+     * @param mixed $animal_id
+     * @return mixed
+     */
     public function getPetId($animal_id)
     {
         $sql = " SELECT * FROM $this->table_name WHERE animal_id = :animal_id";
@@ -27,6 +58,11 @@ class PetsModel extends BaseModel
         return $this->run($sql, $query_value)->fetchAll();
     }
 
+    /**
+     * Summary of getAll
+     * @param array $filters
+     * @return array
+     */
     public function getAll(array $filters = []) {
         $query_values = [];
 
@@ -62,6 +98,11 @@ class PetsModel extends BaseModel
         return $this->paginate($sql, $query_values);
     }
 
+    /**
+     * Summary of getPetsByCategoryId
+     * @param mixed $category_id
+     * @return array
+     */
     public function getPetsByCategoryId($category_id)
     {
         $sql = "SELECT * FROM  $this->table_name WHERE breed_id IN
@@ -72,6 +113,11 @@ class PetsModel extends BaseModel
         return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * Summary of getPetsByEntryId
+     * @param mixed $entry_id
+     * @return array
+     */
     public function getPetsByEntryId($entry_id)
     {
         $sql = "SELECT * FROM  $this->table_name WHERE record_id IN

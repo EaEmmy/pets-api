@@ -9,16 +9,30 @@ use Psr\Log\InvalidArgumentException;
 use Vanier\Api\Models\AppearancesModel;
 
 
+/**
+ * Summary of AppearancesController
+ */
 class AppearancesController
 {
     private $appearanceModel = null;
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         $this->appearanceModel = new AppearancesModel();
     }
     // create new appearance
 
     
+    /**
+     * Summary of handleCreateAppearances
+     * @param Request $request
+     * @param Response $response
+     * @throws HttpNotFoundException
+     * @throws InvalidArgumentException
+     * @return Response
+     */
     public function handleCreateAppearances(Request $request, Response $response){
 
         //step1: to retrieve from request body
@@ -43,6 +57,12 @@ class AppearancesController
     }
 
     // // validate film and set rules
+    /**
+     * Summary of isValidAppearance
+     * @param mixed $appearance
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidAppearance($appearance)
     {
         
@@ -81,6 +101,14 @@ class AppearancesController
         }
     }
     // get appearance by id 
+    /**
+     * Summary of getAppearanceId
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @throws HttpNotFoundException
+     * @return Response
+     */
     public function getAppearanceId(Request $request, Response $response, array $uri_args)
     {
         $appearance_id = $uri_args["appearance_id"];
@@ -98,6 +126,12 @@ class AppearancesController
         return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
 
     }
+    /**
+     * Summary of getAllAppearances
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function getAllAppearances(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     

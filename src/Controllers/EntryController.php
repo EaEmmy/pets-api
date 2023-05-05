@@ -9,14 +9,32 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Psr\Log\InvalidArgumentException;
 
+/**
+ * Summary of EntryController
+ */
 class EntryController extends BaseController
 {
+    /**
+     * Summary of entry_model
+     * @var
+     */
     private $entry_model = null;
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         $this->entry_model = new EntryModel();
     }
 
+    /**
+     * Summary of handleCreateEntries
+     * @param Request $request
+     * @param Response $response
+     * @throws HttpNotFoundException
+     * @throws InvalidArgumentException
+     * @return Response
+     */
     public function handleCreateEntries(Request $request, Response $response){
 
         //step1: to retrieve from request body
@@ -64,6 +82,12 @@ class EntryController extends BaseController
     // }
 
     // validate entry and set rules
+    /**
+     * Summary of isValidEntry
+     * @param mixed $entry
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidEntry($entry)
     {
         
@@ -112,6 +136,14 @@ class EntryController extends BaseController
     //     return true;
     // }
 
+    /**
+     * Summary of getEntryId
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @throws HttpNotFoundException
+     * @return Response
+     */
     public function getEntryId(Request $request, Response $response, array $uri_args)
     {
         $entry_id = $uri_args["entry_id"];
@@ -129,6 +161,12 @@ class EntryController extends BaseController
         return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
     }
 
+    /**
+     * Summary of getAllEntries
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function getAllEntries(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     

@@ -10,6 +10,7 @@ use Vanier\Api\Controllers\BreedsController;
 use Vanier\Api\controllers\CatFactController;
 use Vanier\Api\Controllers\EntryController;
 use Vanier\Api\Controllers\RecordController;
+use Vanier\Api\Controllers\DistanceController;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -89,6 +90,10 @@ $app->delete('/pets', [PetsController::class,'handleDeletePets']);
 //$app->delete('/entries', [EntryController::class,'handleDeleteEntries']);
 // Delete records  
 //$app->delete('/records', [RecordController::class,'handleDeleteRecords']);
+
+
+//Distance 
+$app->post('/distance', [DistanceController::class,'handleDistance']); 
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

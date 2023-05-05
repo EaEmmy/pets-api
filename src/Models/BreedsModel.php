@@ -2,27 +2,58 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * Summary of BreedsModel
+ */
 class BreedsModel extends BaseModel
 {
+    /**
+     * Summary of table_name
+     * @var string
+     */
     private $table_name = "breed";
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         parent::__construct();
     }
    
+    /**
+     * Summary of createBreed
+     * @param array $breed
+     * @return mixed
+     */
     public function createBreed(array $breed){
         return $this->insert($this->table_name, $breed);
     }
 
+    /**
+     * Summary of updateBreed
+     * @param int $breed_id
+     * @param array $breed
+     * @return mixed
+     */
     public function updateBreed(int $breed_id, array $breed){
         return $this->update($this->table_name, $breed, ["breed_id" => $breed_id]);
     }
   
     
+    /**
+     * Summary of deleteBreed
+     * @param int $breed_id
+     * @return mixed
+     */
     public function deleteBreed(int $breed_id){
         return $this->delete($this->table_name, ["breed_id" => $breed_id]);
     }
  
+    /**
+     * Summary of getBreedId
+     * @param mixed $breed_id
+     * @return mixed
+     */
     public function getBreedId($breed_id)
     {
         $sql = " SELECT * FROM $this->table_name WHERE breed_id = :breed_id";
@@ -31,6 +62,11 @@ class BreedsModel extends BaseModel
     }
 
 
+    /**
+     * Summary of getAll
+     * @param array $filters
+     * @return array
+     */
     public function getAll(array $filters = []) {
         $query_values = [];
 

@@ -5,8 +5,18 @@ namespace Vanier\Api\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * Summary of BaseController
+ */
 class BaseController
 {
+    /**
+     * Summary of prepareOkResponse
+     * @param Response $response
+     * @param array $data
+     * @param int $status_code
+     * @return Response
+     */
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
     {
         // var_dump($data);

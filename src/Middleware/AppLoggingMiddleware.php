@@ -20,12 +20,25 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 
 
+/**
+ * Summary of AppLoggingMiddleware
+ */
 class AppLoggingMiddleware implements MiddlewareInterface
 {
+    /**
+     * Summary of __construct
+     * @param array $options
+     */
     public function __construct(array $options = []){
     
     }
 
+    /**
+     * Summary of process
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
     public function process (Request $request, RequestHandler $handler): ResponseInterface{
 
         // inspect request first

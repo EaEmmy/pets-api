@@ -8,15 +8,41 @@ use Fig\Http\Message\StatusCodeInterface as HttpCodes;
 use Vanier\Api\Helpers\Calculator;
 use Vanier\Api\Models\DistanceModel;
 
+<<<<<<< HEAD
+/**
+ * Summary of DistanceController
+ */
+class DistanceController extends BaseController
+{
+
+    /**
+     * Summary of distance_model
+     * @var
+     */
+    private $distance_model = null;
+    /**
+     * Summary of __construct
+     */
+=======
 class DistanceController extends BaseController
 {
 
     private $distance_model = null;
+>>>>>>> 8ad8cc0cfca5444ed2136984858bc0e990e2e674
     public function __construct()
     {
         $this->distance_model = new DistanceModel();
     }
 
+<<<<<<< HEAD
+    /**
+     * Summary of handleDistance
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+=======
+>>>>>>> 8ad8cc0cfca5444ed2136984858bc0e990e2e674
     public function handleDistance(Request $request, Response $response)
     {
         $inputs = $request->getParsedBody();

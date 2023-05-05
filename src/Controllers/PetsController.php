@@ -9,15 +9,29 @@ use Slim\Exception\HttpException;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\PetsModel;
 
+/**
+ * Summary of PetsController
+ */
 class PetsController
 {
     private $pet_model = null;
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         $this->pet_model = new PetsModel();
     }
 
     //POST to create new pet
+     /**
+      * Summary of handleCreatePets
+      * @param Request $request
+      * @param Response $response
+      * @throws HttpNotFoundException
+      * @throws InvalidArgumentException
+      * @return Response
+      */
      public function handleCreatePets(Request $request, Response $response){
 
         //step1: to retrieve from request body
@@ -43,6 +57,12 @@ class PetsController
     }
 
     // // validate film and set rules
+    /**
+     * Summary of isValidPet
+     * @param mixed $pet
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidPet($pet)
     {
         
@@ -106,6 +126,14 @@ class PetsController
         }
     }
 
+    /**
+     * Summary of handleUpdatePets
+     * @param Request $request
+     * @param Response $response
+     * @throws HttpNotFoundException
+     * @throws InvalidArgumentException
+     * @return Response
+     */
     public function handleUpdatePets(Request $request, Response $response){
 
         $pet_data = $request->getParsedBody();
@@ -132,6 +160,12 @@ class PetsController
         return $response->withStatus(StatusCodeInterface::STATUS_OK);
     }
 
+    /**
+     * Summary of isValidPetUpdate
+     * @param mixed $pet
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidPetUpdate($pet)
     {
         
@@ -201,6 +235,14 @@ class PetsController
     }
     
     // DELETE Pets 
+    /**
+     * Summary of handleDeletePets
+     * @param Request $request
+     * @param Response $response
+     * @throws HttpNotFoundException
+     * @throws InvalidArgumentException
+     * @return Response
+     */
     public function handleDeletePets(Request $request, Response $response){
         //Step 1) retrieve data from request
         $pet_data = $request->getParsedBody();
@@ -228,6 +270,12 @@ class PetsController
     }
     
     // validate film_id before deletion
+    /**
+     * Summary of isValidDeletePets
+     * @param mixed $pets
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidDeletePets($pets)
     {       
         foreach ($pets as $animal_id) {
@@ -241,6 +289,14 @@ class PetsController
     }
 
     // get pet by id 
+    /**
+     * Summary of getPetId
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @throws HttpNotFoundException
+     * @return Response
+     */
     public function getPetId(Request $request, Response $response, array $uri_args)
     {
         $pet_id = $uri_args["pet_id"];
@@ -260,6 +316,12 @@ class PetsController
     }
    
 
+    /**
+     * Summary of getAllPets
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function getAllPets(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     
@@ -285,6 +347,13 @@ class PetsController
     }
 
 
+    /**
+     * Summary of getPetsByCategory
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function getPetsByCategory(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();
@@ -304,6 +373,13 @@ class PetsController
         return $response->withStatus(200)->withHeader("Content-Type","application/json");
     }
 
+    /**
+     * Summary of getPetsByEntry
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function getPetsByEntry(Request $request, Response $response, array $uri_args)
     {
         $filters = $request->getQueryParams();

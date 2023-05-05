@@ -9,6 +9,9 @@ use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\UserModel;
 use Vanier\Api\Validations\Validator;
 use Vanier\Api\Helpers\JWTManager;
+/**
+ * Summary of AuthenticationController
+ */
 class AuthenticationController
 {
     private $users_model = null;
@@ -16,6 +19,13 @@ class AuthenticationController
         $this->users_model = new UserModel();
     }
 
+    /**
+     * Summary of handleGetToken
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     function handleGetToken(Request $request, Response $response, array $args) {
         $user_data = $request->getParsedBody();
         //var_dump($user_data);exit;
@@ -60,6 +70,13 @@ class AuthenticationController
     
     // HTTP POST: URI /account 
     // Creates a new user account.
+    /**
+     * Summary of handleCreateUserAccount
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     function handleCreateUserAccount(Request $request, Response $response, array $args) {
         $user_data = $request->getParsedBody();
         // Verify if information about the new user to be created was included in the 
@@ -82,6 +99,13 @@ class AuthenticationController
                 ['error' => false, 'message' => 'The new user account has been created successfully!'], 400);
     }
     
+    /**
+     * Summary of prepareResponse
+     * @param Response $response
+     * @param mixed $in_payload
+     * @param mixed $status_code
+     * @return Response
+     */
     function prepareResponse(Response $response, $in_payload, $status_code) {
         $payload = json_encode($in_payload);
         $response->getBody()->write($payload);

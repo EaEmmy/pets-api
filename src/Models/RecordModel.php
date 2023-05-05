@@ -2,14 +2,29 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * Summary of RecordModel
+ */
 class RecordModel extends BaseModel
 {
+    /**
+     * Summary of table_name
+     * @var string
+     */
     private $table_name = "record";
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         parent::__construct();
     }
     // create record in the db
+    /**
+     * Summary of createRecord
+     * @param array $record
+     * @return bool|string
+     */
     public function createRecord(array $record){
         return $this->insert($this->table_name, $record);
     }
@@ -18,6 +33,11 @@ class RecordModel extends BaseModel
     //     return $this->delete($this->table_name, ["record_id" => $record_id]);
     // }
 
+    /**
+     * Summary of getRecordId
+     * @param mixed $record_id
+     * @return mixed
+     */
     public function getRecordId($record_id)
     {
         $sql = " SELECT * FROM $this->table_name WHERE record_id = :record_id";
@@ -25,6 +45,11 @@ class RecordModel extends BaseModel
         return $this->run($sql, $query_value)->fetchAll();
     }
 
+    /**
+     * Summary of getAll
+     * @param array $filters
+     * @return array
+     */
     public function getAll(array $filters = []) {
         $query_values = [];
 

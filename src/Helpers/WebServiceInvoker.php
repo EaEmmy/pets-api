@@ -8,15 +8,27 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Summary of WebServiceInvoker
+ */
 class WebServiceInvoker
 {
     private array $request_options = [];
 
+    /**
+     * Summary of __construct
+     */
     public function __construct()
     {
         //$this->request_options = $options;
     }
 
+    /**
+     * Summary of invokeUri
+     * @param string $resource_uri
+     * @throws Exception
+     * @return string
+     */
     public function invokeUri(string $resource_uri)
     {
         //1) Instantiate a client options

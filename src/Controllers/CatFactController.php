@@ -3,8 +3,15 @@
 namespace Vanier\Api\controllers;
 use Vanier\Api\Helpers\WebServiceInvoker;
 
+/**
+ * Summary of CatFactController
+ */
 class CatFactController extends WebServiceInvoker
 {
+    /**
+     * Summary of getCatFacts
+     * @return array
+     */
     public function getCatFacts (): array
     {
         $catFacts_uri = 'https://cat-fact.herokuapp.com/facts/';

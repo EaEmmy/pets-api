@@ -13,14 +13,31 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Exceptions\HttpNotAcceptableException;
 
+/**
+ * Summary of ContentNegotiationMiddleware
+ */
 class ContentNegotiationMiddleware implements MiddlewareInterface
 {
 
+    /**
+     * Summary of supported_types
+     * @var array
+     */
     private $supported_types = [APP_MEDIA_TYPE_JSON];
+    /**
+     * Summary of __construct
+     * @param array $options
+     */
     public function __construct(array $options = []){
             $this->supported_types = array_merge($options, $this->supported_types);
         }
 
+    /**
+     * Summary of process
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
     public function process (Request $request, RequestHandler $handler): ResponseInterface{
 
         $accept = $request->getHeaderLine("Accept");

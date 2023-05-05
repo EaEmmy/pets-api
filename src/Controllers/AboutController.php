@@ -6,8 +6,18 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
 
+/**
+ * Summary of AboutController
+ */
 class AboutController extends BaseController
 {
+    /**
+     * Summary of handleAboutApi
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function handleAboutApi(Request $request, Response $response, array $uri_args)
     {
         $data = array(

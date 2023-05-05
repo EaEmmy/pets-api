@@ -10,14 +10,28 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 
 
+/**
+ * Summary of RecordController
+ */
 class RecordController extends BaseController
 {
     private $record_model = null;
 
+    /**
+     * Summary of __construct
+     */
     public function __construct(){
         $this->record_model = new RecordModel();
     }
 
+    /**
+     * Summary of handleCreateRecords
+     * @param Request $request
+     * @param Response $response
+     * @throws HttpNotFoundException
+     * @throws InvalidArgumentException
+     * @return Response
+     */
     public function handleCreateRecords(Request $request, Response $response){
 
         //step1: to retrieve from request body
@@ -65,6 +79,12 @@ class RecordController extends BaseController
     // }
 
     // // validate film and set rules
+    /**
+     * Summary of isValidRecord
+     * @param mixed $record
+     * @throws InvalidArgumentException
+     * @return bool
+     */
     private function isValidRecord($record)
     {
         
@@ -131,6 +151,14 @@ class RecordController extends BaseController
     //     return true;
     // }
 
+    /**
+     * Summary of getRecordId
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @throws HttpNotFoundException
+     * @return Response
+     */
     public function getRecordId(Request $request, Response $response, array $uri_args)
     {
         $record_id = $uri_args["record_id"];
@@ -148,6 +176,12 @@ class RecordController extends BaseController
         return $response->withStatus(200)->withHeader("Content-Type" , "application/json");
     }
 
+    /**
+     * Summary of getAllRecords
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function getAllRecords(Request $request, Response $response) {
         $filters = $request->getQueryParams();
     
