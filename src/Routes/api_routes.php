@@ -3,6 +3,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\AgeController;
 use Vanier\Api\Controllers\PetsController;
 use Vanier\Api\Controllers\CategoriesController;
 use Vanier\Api\Controllers\AppearancesController;
@@ -94,6 +95,9 @@ $app->delete('/pets', [PetsController::class,'handleDeletePets']);
 
 //Distance 
 $app->post('/distance', [DistanceController::class,'handleDistance']); 
+
+//Age
+$app->post('/age', [AgeController::class,'handleAge']); 
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

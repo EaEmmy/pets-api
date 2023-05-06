@@ -2,6 +2,7 @@
 
 namespace Vanier\Api\Helpers {
 
+    use DateTime;
     use Exception;
 
     /**
@@ -244,6 +245,17 @@ namespace Vanier\Api\Helpers {
         {
             return !is_array($longitude) && preg_match(static::REGEX_LONGITUDE, $longitude);
         }
+
+        public function getAge(DateTime $birth, DateTime $new):array
+        {
+            $age_diff = $new->diff($birth);
+            $age = [
+                'years' => $age_diff->y,
+                'months' => $age_diff->m,
+                'days' => $age_diff->d
+            ];
+            return $age;
+        }   
     }
     class InvalidCoordinateFormatException extends Exception
     {

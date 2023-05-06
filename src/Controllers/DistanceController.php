@@ -38,16 +38,12 @@ class DistanceController extends BaseController
      public function handleDistance(Request $request, Response $response)
     {
         $inputs = $request->getParsedBody();
-        //var_dump($inputs);exit;
         $from_prefix = $inputs['from'];
-        //var_dump($from_prefix);exit;
         $to_prefix = $inputs['to'];
-        // var_dump($to_prefix);exit;
         $unit_prefix = $inputs['unit'];
 
         $from = $this->distance_model->getCodeCoordinates($from_prefix);
         $to = $this->distance_model->getCodeCoordinates($to_prefix);
-        // var_dump($from);exit;
         $from_latitude = $from['latitude'];
         $from_longitude = $from['longitude'];;
         $to_latitude = $to['latitude'];;
