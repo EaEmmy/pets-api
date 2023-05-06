@@ -81,3 +81,6 @@
 [2023-05-05T11:21:34.584090-04:00] access_logs.INFO: IP: 127.0.0.1 DATA  [] []
 =======
 >>>>>>> 8ad8cc0cfca5444ed2136984858bc0e990e2e674
+[2023-05-05T20:22:45.231024-04:00] access_logs.INFO: hello from middleware [] []
+[2023-05-05T20:22:45.241222-04:00] access_logs.INFO: IP: 127.0.0.1 POST /pets-api/distance [] []
+[2023-05-05T20:22:45.241267-04:00] access_logs.INFO: IP: 127.0.0.1 DATA  [] []
