@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Psr\Log\InvalidArgumentException;
 use Vanier\Api\Models\AppearancesModel;
+use Vanier\Api\Models\WSLoggingModel;
 
 
 /**
@@ -34,6 +35,11 @@ class AppearancesController
      * @return Response
      */
     public function handleCreateAppearances(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
 
         //step1: to retrieve from request body
         $appearance_data = $request->getParsedBody();
@@ -111,6 +117,11 @@ class AppearancesController
      */
     public function getAppearanceId(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $appearance_id = $uri_args["appearance_id"];
     
         if(empty($appearance_id)){
@@ -133,6 +144,12 @@ class AppearancesController
      * @return Response
      */
     public function getAllAppearances(Request $request, Response $response) {
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+        
         $filters = $request->getQueryParams();
     
         $appearance_model = new AppearancesModel();

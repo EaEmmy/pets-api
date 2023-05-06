@@ -8,6 +8,7 @@ use Psr\Log\InvalidArgumentException;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\PetsModel;
+use Vanier\Api\Models\WSLoggingModel;
 
 /**
  * Summary of PetsController
@@ -33,6 +34,11 @@ class PetsController
       * @return Response
       */
      public function handleCreatePets(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
 
         //step1: to retrieve from request body
         $pet_data = $request->getParsedBody();
@@ -135,6 +141,11 @@ class PetsController
      * @return Response
      */
     public function handleUpdatePets(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
 
         $pet_data = $request->getParsedBody();
 
@@ -244,6 +255,12 @@ class PetsController
      * @return Response
      */
     public function handleDeletePets(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         //Step 1) retrieve data from request
         $pet_data = $request->getParsedBody();
         
@@ -299,6 +316,11 @@ class PetsController
      */
     public function getPetId(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $pet_id = $uri_args["pet_id"];
     
         if(empty($pet_id)){
@@ -323,6 +345,12 @@ class PetsController
      * @return Response
      */
     public function getAllPets(Request $request, Response $response) {
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $filters = $request->getQueryParams();
     
         $pet_model = new PetsModel();
@@ -356,6 +384,11 @@ class PetsController
      */
     public function getPetsByCategory(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $filters = $request->getQueryParams();
 
         $category_id = $uri_args["category_id"];
@@ -382,6 +415,11 @@ class PetsController
      */
     public function getPetsByEntry(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+        
         $filters = $request->getQueryParams();
 
         $entry_id = $uri_args["entry_id"];

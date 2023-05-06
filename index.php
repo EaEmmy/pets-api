@@ -16,12 +16,13 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 
 
-use Tuupola\Middleware\JwtAuthentication;
+use Vanier\Api\Middleware\JWTAuthMiddleware;
 use Vanier\Api\Helpers\JWTManager;
 
 
 define('APP_BASE_DIR', __DIR__);
 define('APP_ENV_CONFIG', 'config.env');
+define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
 // What's up???
 require __DIR__ . '/vendor/autoload.php';
  // Include the file that contains the application's global configuration settings,
@@ -36,6 +37,9 @@ $app->addBodyParsingMiddleware();
 
 $jwt_secret = JWTManager::getSecretKey();
 $app->add(new AppLoggingMiddleware);
+$app->add(new JWTAuthMiddleware());
+
+
 
 // Parse body for create/post 
 $app->add(new ContentNegotiationMiddleware());

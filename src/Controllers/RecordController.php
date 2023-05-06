@@ -8,6 +8,7 @@ use Psr\Log\InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
+use Vanier\Api\Models\WSLoggingModel;
 
 
 /**
@@ -33,6 +34,11 @@ class RecordController extends BaseController
      * @return Response
      */
     public function handleCreateRecords(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
 
         //step1: to retrieve from request body
         $record_data = $request->getParsedBody();
@@ -161,6 +167,11 @@ class RecordController extends BaseController
      */
     public function getRecordId(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+        
         $record_id = $uri_args["record_id"];
     
         if(empty($record_id)){
@@ -183,6 +194,12 @@ class RecordController extends BaseController
      * @return Response
      */
     public function getAllRecords(Request $request, Response $response) {
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+        
         $filters = $request->getQueryParams();
     
         $record_model = new RecordModel();

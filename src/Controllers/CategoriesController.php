@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Vanier\Api\Models\CategoriesModel;
+use Vanier\Api\Models\WSLoggingModel;
 
 
 /**
@@ -32,6 +33,11 @@ class CategoriesController
      */
     public function getCategoryId(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+        
         $category_id = $uri_args["category_id"];
     
         if(empty($category_id)){
@@ -54,6 +60,12 @@ class CategoriesController
      * @return Response
      */
     public function getAllCategories(Request $request, Response $response) {
+        
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $filters = $request->getQueryParams();
     
         $category_model = new CategoriesModel();

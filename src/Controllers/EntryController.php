@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
 use Psr\Log\InvalidArgumentException;
+use Vanier\Api\Models\WSLoggingModel;
 
 /**
  * Summary of EntryController
@@ -36,6 +37,11 @@ class EntryController extends BaseController
      * @return Response
      */
     public function handleCreateEntries(Request $request, Response $response){
+
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
 
         //step1: to retrieve from request body
         $entry_data = $request->getParsedBody();
@@ -146,6 +152,11 @@ class EntryController extends BaseController
      */
     public function getEntryId(Request $request, Response $response, array $uri_args)
     {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $entry_id = $uri_args["entry_id"];
     
         if(empty($entry_id)){
@@ -168,6 +179,12 @@ class EntryController extends BaseController
      * @return Response
      */
     public function getAllEntries(Request $request, Response $response) {
+        
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"].' '.$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
+
         $filters = $request->getQueryParams();
     
         $entry_model = new EntryModel();
