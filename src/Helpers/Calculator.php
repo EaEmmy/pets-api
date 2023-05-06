@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Summary of namespace Vanier\Api\Helpers
+ */
 namespace Vanier\Api\Helpers {
 
     use DateTime;
@@ -246,6 +249,12 @@ namespace Vanier\Api\Helpers {
             return !is_array($longitude) && preg_match(static::REGEX_LONGITUDE, $longitude);
         }
 
+        /**
+         * Summary of getAge
+         * @param DateTime $birth
+         * @param DateTime $new
+         * @return array
+         */
         public function getAge(DateTime $birth, DateTime $new):array
         {
             $age_diff = $new->diff($birth);
